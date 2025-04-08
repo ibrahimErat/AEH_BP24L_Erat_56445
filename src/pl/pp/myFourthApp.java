@@ -2,7 +2,7 @@ package pl.pp;
 
 import java.util.Scanner;
 
-public class myThirdApp {
+public class myFourthApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
