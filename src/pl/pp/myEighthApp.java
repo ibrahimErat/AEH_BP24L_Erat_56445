@@ -1,11 +1,14 @@
 package pl.pp;
 
-// Since Person and Circle are in the same package, explicit imports are not strictly needed.
+// Since Person, Circle, and Account are in the same package, explicit imports are not strictly needed.
 // import pl.pp.Person;
 // import pl.pp.Circle; 
+// import pl.pp.Account;
  
 public class myEighthApp { // Renamed class to match filename
     public static void main(String[] args) {
+/*
+        // --- Original Lab 8 Demonstration ---
         System.out.println("--- Lab 8 Demonstration ---");
 
         // --- Person Demo (using public fields as provided) ---
@@ -51,6 +54,28 @@ public class myEighthApp { // Renamed class to match filename
         circle2.getInfo(); // Radius should be 0
 
         System.out.println("\n--- End of Demonstration ---");
+*/
+
+        // --- Lab 8 Task 2: Account Demonstration ---
+        System.out.println("\n--- Account Demonstration ---");
+
+        // Create a new account
+        Account myAccount = new Account("123456789", 1000.0, "Ibrahim Erat", "ibrahim.e@example.com", "555-1234");
+
+        System.out.println("\n--- Performing Transactions ---");
+        // Perform transactions as in the example
+        myAccount.withdraw(900.0);
+        myAccount.deposit(250.0);
+        myAccount.withdraw(50.0);
+        myAccount.withdraw(400.0); // This should fail
+
+        // Demonstrate getters
+        System.out.println("\n--- Account Details ---");
+        System.out.println("Account Number: " + myAccount.getAccountNumber());
+        System.out.println("Owner: " + myAccount.getOwnerName());
+        System.out.printf(java.util.Locale.US, "Final Balance: PLN %.2f%n", myAccount.getAvailableFunds());
+
+         System.out.println("\n--- End of Account Demonstration ---");
 
     }
 } 
