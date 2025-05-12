@@ -8,7 +8,8 @@ public class Circle {
     }
  
     public Circle(double radius) {
-        this.radius = radius;
+        // Use the setter to ensure validation is applied
+        setRadius(radius);
     }
  
     // Getter for radius
