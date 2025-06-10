@@ -38,7 +38,7 @@ public class myNinthApp { // Renamed class to match filename
         person1.setName("Lolo"); 
         System.out.println(person1.getName()); 
         person1.hiToAll();
-        
+
         // --- Circle Demo (using private field and getter/setter) ---
         // This part correctly demonstrates private fields and access via methods.
         System.out.println("\n--- Circle Demo ---");

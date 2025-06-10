@@ -1,14 +1,17 @@
 package pl.pp;
 
-import java.util.Scanner;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.nio.file.Paths; // For getting filename from path
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class myTwelfthApp {
+public class myThirteenthApp {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String inputFilePath;
@@ -20,59 +23,55 @@ public class myTwelfthApp {
         System.out.println("Enter the path to the output text file:");
         outputFilePath = scanner.nextLine();
 
-        int lineCount = 0;
         boolean fileProcessedSuccessfully = false;
 
         while (!fileProcessedSuccessfully) {
+            int wordCount = 0;
+            Map<String, Integer> wordOccurrences = new HashMap<>();
+
             try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    lineCount++;
+                    String[] words = line.split("\\s+");
+                    for (String word : words) {
+                        if (!word.isEmpty()) {
+                            wordCount++;
+                            String cleanedWord = word.toLowerCase().replaceAll("[^a-zA-Z]", "");
+                            if (!cleanedWord.isEmpty()) {
+                                wordOccurrences.put(cleanedWord, wordOccurrences.getOrDefault(cleanedWord, 0) + 1);
+                            }
+                        }
+                    }
                 }
-                fileProcessedSuccessfully = true; // Mark as successful if reading completes
+                fileProcessedSuccessfully = true;
 
-                System.out.println("The input file \"" + Paths.get(inputFilePath).getFileName() + "\" has " + lineCount + " lines.");
+                System.out.println("The input file \"" + Paths.get(inputFilePath).getFileName() + "\" has " + wordCount + " words.");
+                System.out.println("Word Occurrences:");
+                wordOccurrences.forEach((word, count) -> System.out.println(word + ": " + count));
+
 
                 try (FileWriter writer = new FileWriter(outputFilePath)) {
                     writer.write("Input File: " + Paths.get(inputFilePath).getFileName() + "\n");
-                    writer.write("Number of Lines: " + lineCount + "\n");
+                    writer.write("Total Word Count: " + wordCount + "\n\n");
+                    writer.write("Word Occurrences:\n");
+                    for (Map.Entry<String, Integer> entry : wordOccurrences.entrySet()) {
+                        writer.write(entry.getKey() + ": " + entry.getValue() + "\n");
+                    }
                     System.out.println("Results saved to \"" + outputFilePath + "\"");
                 } catch (IOException e) {
                     System.err.println("Error writing to the output file: " + e.getMessage());
-                    // Decide if we should retry or exit. For now, we'll just report and continue (as input was read).
                 }
 
             } catch (FileNotFoundException e) {
                 System.err.println("Error: Input file not found: " + inputFilePath);
                 System.out.println("Please enter a valid path for the input text file:");
-                inputFilePath = scanner.nextLine(); // Ask for a new input file path
-                lineCount = 0; // Reset line count for the new file
+                inputFilePath = scanner.nextLine();
             } catch (IOException e) {
                 System.err.println("Error reading the input file: " + e.getMessage());
-                // For other IOExceptions, we might want to allow retrying or exit.
-                // For simplicity here, if it's not FileNotFound, we'll prompt for a new file path as well.
                 System.out.println("An error occurred. Please enter a valid path for the input text file:");
-                inputFilePath = scanner.nextLine(); // Ask for a new input file path
-                lineCount = 0; // Reset line count for the new file
+                inputFilePath = scanner.nextLine();
             }
         }
         scanner.close();
-    }
-
-    // Task 2 from Lab 10: Count negatives and sum positives - kept for now, can be removed if not needed.
-    public static int[] countAndSumElements(int[] input) {
-        if (input == null || input.length == 0) {
-            return new int[0];
-        }
-        int negativeCount = 0;
-        int positiveSum = 0;
-        for (int num : input) {
-            if (num < 0) {
-                negativeCount++;
-            } else if (num > 0) {
-                positiveSum += num;
-            }
-        }
-        return new int[]{negativeCount, positiveSum};
     }
 } 
