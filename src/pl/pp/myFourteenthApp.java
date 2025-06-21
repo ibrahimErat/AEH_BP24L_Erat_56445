@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class myThirteenthApp {
+public class myFourteenthApp {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
